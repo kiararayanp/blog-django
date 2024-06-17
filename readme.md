@@ -10,6 +10,8 @@ Ensure you have the following installed:
 
 - Git (for version control)
 
+- MySql
+
 ## Installation Steps
 
 Follow these steps to get the project up and running:
