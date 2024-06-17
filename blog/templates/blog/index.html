@@ -1,0 +1,100 @@
+{%extends 'common.html'%}
+{%block title%}
+Blogic | Great Blogs
+{%endblock title%}
+
+
+{%block content%}
+{%include 'navbar.html'%}
+<div class="container mt-5 mx-auto">
+    {%if user.is_authenticated%}
+    <!-- Button trigger modal -->
+    <div class="d-flex justify-content-end">
+        <button type="button" class="btn btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Add new post
+        </button>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form method="POST" class="modal-content" style="width: 600px;" enctype="multipart/form-data">
+                {%csrf_token%}
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add Blog</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Title</label>
+                        <input name="title" type="text" class="form-control" id="exampleFormControlInput1"
+                            placeholder="">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" class="form-label">Category</label>
+                        <select name="category_id" class="form-select" aria-label="Default select example">
+
+                            {%for category in categories%}
+                            <option value="{{category.id}}">{{category.name}}</option>
+                            {%endfor%}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Image</label>
+                        <input name="image" type="file" class="form-control" id="exampleFormControlInput1">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" class="form-label">Content</label>
+                        <textarea name="content" class="form-control" id="exampleFormControlTextarea1"
+                            rows="6"></textarea>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    {%endif%}
+
+    <div class="album py-5">
+        <div class="container">
+
+
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                {%for post in posts%}
+                <div class="col">
+                    <div class="card shadow-sm">
+                        {%if post.image%}
+                        <img src="{{post.image.url}}" style="height: 250px;" class="object-fit-cover" alt="">
+                        {%endif%}
+                        <div class="card-body">
+                            <h4>{{post.title|slice:":50"}}</h4>
+                            <span class="badge rounded-pill text-bg-success mb-2">{{post.category.name}}</span>
+                            <p class="card-text">{{post.content|slice:":100"}}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <a href="{%url 'blog_single' post.id%}" type="button"
+                                        class="btn btn-sm btn-outline-secondary">View</a>
+                                    {%if user == post.author%}
+                                    <a type="button" href="{%url 'edit_blog' post.id%}"
+                                        class="btn btn-sm btn-outline-secondary">Edit</a>
+                                    <a href="{%url 'delete' post.id%}" type="button"
+                                        class="btn btn-sm btn-outline-danger">Delete</a>
+                                    {%endif%}
+                                </div>
+                                <small class="text-body-secondary">{{post.created_at|timesince}} ago</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {%endfor%}
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock content%}

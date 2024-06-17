@@ -1,0 +1,35 @@
+{%extends 'common.html'%}
+{%block title%}
+Blogic | {{post.title}}
+{%endblock title%}
+
+
+{%block content%}
+{%include 'navbar.html'%}
+<div class="container my-5">
+    {%if post.image%}
+    <img class="w-100 my-3" src="{{post.image.url}}" />
+    {%endif%}
+    <div style="max-width: 700px;" class="mx-auto text-secondary position-relative">
+        <div class="text-center mb-4">
+
+            <div>
+                <small>
+                    <a href="#" class="text-primary">{{post.category.name}}</a>
+                </small>
+            </div>
+            <h1 class="text-center font-weight-bold text-dark">{{post.title}}
+            </h1>
+            <div>
+                <small class="text-dark">
+                    Written by <a href="#" class="text-primary">{{post.author.first_name}} {{post.author.last_name}}</a>
+                </small>
+            </div>
+        </div>
+        <div class="my-5">
+            {{post.content}}
+        </div>
+    </div>
+</div>
+
+{%endblock content%}

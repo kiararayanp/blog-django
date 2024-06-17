@@ -1,0 +1,48 @@
+{%extends 'common.html'%}
+{%block title%}
+Blogic | Edit Blog
+{%endblock title%}
+
+
+{%block content%}
+{%include 'navbar.html'%}
+<div class="container d-flex justify-content-center">
+    <form method="POST" class="" style="width: 600px;" enctype="multipart/form-data">
+        {%csrf_token%}
+        <div class="">
+            <h2 class="my-5" id="exampleModalLabel">Update Blog</h2>
+        </div>
+        <div class="">
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Title</label>
+                <input name="title" type="text" class="form-control" id="exampleFormControlInput1" placeholder=""
+                    value="{{post.title}}">
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">Category</label>
+                <select name="category_id" class="form-select" aria-label="Default select example">
+
+                    {%for category in categories%}
+                    <option {%if category == post.category %} selected {%endif%} value="{{category.id}}">{{category.name}}
+                    </option>
+                    {%endfor%}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Image</label>
+                <input name="image" type="file" class="form-control" id="exampleFormControlInput1">
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">Content</label>
+                <textarea name="content" class="form-control" id="exampleFormControlTextarea1"
+                    rows="6">{{post.content}}</textarea>
+            </div>
+
+
+        </div>
+        <div class="">
+            <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+    </form>
+</div>
+{%endblock content%}

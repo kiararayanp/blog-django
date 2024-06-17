@@ -1,0 +1,41 @@
+{%extends 'common.html'%}
+{%block title%}
+Blogic | Login
+{%endblock title%}
+
+
+{%block content%}
+
+<div class="container mt-5 d-flex justify-content-center">
+
+    <form action="" method="POST" class="w-25">
+        <h1 style="text-align: center;">Login </h1>
+        {%csrf_token%}
+
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-danger" role="alert">
+            {{message}}
+        </div>
+        {% endfor %}
+        {% endif %}
+        <div>
+
+            <div class="form-floating mb-3 mt-5">
+                <input name="email" type="email" class="form-control" id="floatingInput" placeholder="name@example.com"
+                    required>
+                <label for="floatingInput">Email address</label>
+            </div>
+            <div class="form-floating">
+                <input name="password" type="password" class="form-control" id="floatingPassword" placeholder="Password"
+                    required>
+                <label for="floatingPassword">Password</label>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary mt-2 w-100">Login</button>
+                <p>Don't have an account yet? <a href="{%url 'register'%}">Create a new account</a> </p>
+            </div>
+        </div>
+    </form>
+</div>
+{%endblock content%}
